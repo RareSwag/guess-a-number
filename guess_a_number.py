@@ -6,14 +6,26 @@ low = 1
 high = 100
 tries = 5
 
+# start game
 rand = random.randrange(low, high)
 print("I'm thinking of a number from " + str(low) + " to " + str(high) + ".");
 
 guess = -1
 
+# helper functions
+def get_guess():
+    while True:
+        g = input("Take a guess: ")
+
+        if g.isnumeric():
+            g = int(g)
+            return g
+        else:
+            print("I don't understand medicine.")
+
+# play game
 while guess != rand and tries > 0:
-    guess = input("Take a guess: ")
-    guess = int(guess)
+    guess = get_guess()
     
     if guess < rand:
         print("You guessed too low.")
