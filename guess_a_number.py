@@ -1,68 +1,97 @@
 import random
+import math
 
 # config
-
 low = 1
 high = 100
-limit = 8
+limit = math.ceil(math.log(high - low + 1 , 2))
 
 # helper functions
+def show_start_screen():
+    print("_/﹋\_")
+    print("(҂`_´)")
+    print("<,︻╦╤─ ҉ - - Guess A Name")
+    print("_/﹋\_")
+    
+def show_credits():
+    print("░░░░░▄▄▀▀▀▀▀▀▀▀▀▄▄░░░░░")
+    print("░░░░█░░░░░░GG░░░░░█░░░░")
+    print("░░░█░░░░░░░░░░▄▄▄░░█░░░")
+    print("░░░█░░▄▄▄░░▄░░███░░█░░░")
+    print("░░░▄█░▄░░░▀▀▀░░░▄░█▄░░░")
+    print("░░░█░░▀█▀█▀█▀█▀█▀░░█░░░")
+    print("░░░▄██▄▄▀▀▀▀▀▀▀▄▄██▄░░░")
+    print("░▄█░█▀▀█▀▀▀█▀▀▀█▀▀█░█▄░")
+    
 def get_guess():
     while True:
-        g = input("Take a guess: ")
+        guess = input("Guess a number: ")
 
-        if g.isnumeric():
-            g = int(g)
-            return g
+        if guess.isnumeric():
+            guess = int(guess)
+            return guess
         else:
-            print("I don't understand medicine.")
+            print("You must enter a number.")
+
+def pick_number():
+    print("I'm thinking of a number from " + str(low) + " to " + str(high) + " and you will have " + str(limit) + " tries to guess it.")
+
+    return random.randint(low, high)
+
+def check_guess(guess, rand):
+    if guess < rand:
+        print()
+        print("You guessed too low.")
+    elif guess > rand:
+        print()
+        print("You guessed too high.")
+
+def show_result(guess, rand):
+    if guess == rand:
+        print()
+        print("You win!")
+    else:
+        print()
+        print("You are such a loser! The number was " + str(rand) + ".")
 
 def play_again():
     while True:
-        decision = input("You wanna play again? (y/n)")
+        decision = input("Would you like to play again? (y/n) ")
+        decision = decision.upper()
+        print()
 
-        if decision == "y" or decision == "yes":
+        if decision == 'Y' or decision == 'YES':
             return True
-        elif decision == "n" or decision == "no":
+        elif decision == 'N' or decision == 'NO':
             return False
-
-        print("Type y or n dummy.")
-
-again = True
-
-while again:
-    # start game
-    tries = limit
-    rand = random.randrange(low, high)
-    print("I'm thinking of a number from " + str(low) + " to " + str(high) + ".");
-
-    guess = -1
-
-    # play game
-    while guess != rand and tries > 0:
-        guess = get_guess()
-        
-        if guess < rand:
-            print("You guessed too low.")
-            tries -= 1
-            print("You have " + str(tries) + " tries left.")
-        elif guess > rand:
-            print("You guessed too high.")
-            tries -= 1
-            print("You have " + str(tries) + " tries left.")
         else:
-            print("You got it fam!")
+            print()
+            print("I don't understand. Please enter 'y' or 'n'.")
 
+def play():
+    guess = -1
+    tries = 0
 
-    if guess == rand:
-        print("Good Job Fam")
-    else:
-        print("Ur Bad Kid. The number was " + str(rand) + ".")
-
-    again = play_again()
-
-print("Bye bye my dude.")
-
+    rand = pick_number()
     
+    while guess != rand and tries < limit:
+        guess = get_guess()
+        check_guess(guess, rand)
+
+        tries += 1
+
+    show_result(guess, rand)
+
+
+# Game starts running here
+show_start_screen()
+
+playing = True
+
+while playing:
+    play()
+    playing = play_again()
+
+show_credits()
 
 
