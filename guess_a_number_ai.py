@@ -1,51 +1,93 @@
-
+"""
+Jaden H.
+RareSwag
+Guess A Number AI
+9-28-17
+"""
 import random
-
-# config
-low = 1
-high = 10
 
 
 # helper functions
 def show_start_screen():
-    print("*************************")
-    print("*  Guess a Number A.I!  *")
-    print("*************************")
+    print("´´´´´´´´´´´´´´´´´´´´´´¶¶¶¶¶¶¶¶¶……..")
+    print("´´´´´´´´´´´´´´´´´´´´¶¶´´´´´´´´´´¶¶……")
+    print("´´´´´´¶¶¶¶¶´´´´´´´¶¶´´´´´´´´´´´´´´¶¶……….")
+    print("´´´´´¶´´´´´¶´´´´¶¶´´´´´¶¶´´´´¶¶´´´´´¶¶…………..")
+    print("´´´´´¶´´´´´¶´´´¶¶´´´´´´¶¶´´´´¶¶´´´´´´´¶¶…..")
+    print("´´´´´¶´´´´¶´´¶¶´´´´´´´´¶¶´´´´¶¶´´´´´´´´¶¶…..")
+    print("´´´´´´¶´´´¶´´´¶´´´´´´´´´Guess a Number´´¶¶….")
+    print("´´´´¶¶¶¶¶¶¶¶¶¶¶¶´´´´´´´´´´´´´Game´´´´´´´¶¶….")
+    print("´´´¶´´´´´´´´´´´´¶´¶¶´´´´´´´´´´´´´¶¶´´´´´¶¶….")
+    print("´´¶¶´´´´´´´´´´´´¶´´¶¶´´´´´´´´´´´´¶¶´´´´´¶¶….")
+    print("´¶¶´´´¶¶¶¶¶¶¶¶¶¶¶´´´´¶¶´´´´´´´´¶¶´´´´´´´¶¶…")
+    print("´¶´´´´´´´´´´´´´´´¶´´´´´¶¶¶¶¶¶¶´´´´´´´´´¶¶….")
+    print("´¶¶´´´´´´´´´´´´´´¶´´´´´´´´´´´´´´´´´´´´¶¶…..")
+    print("´´¶´´´¶¶¶¶¶¶¶¶¶¶¶¶´´´´´´´´´´´´´´´´´´´¶¶….")
+    print("´´¶¶´´´´´´´´´´´¶´´¶¶´´´´´´´´´´´´´´´´¶¶….")
+    print("´´´¶¶¶¶¶¶¶¶¶¶¶¶´´´´´¶¶´´´´´´´´´´´´¶¶…..")
+    print("´´´´´´´´´´´´´´´´´´´´´´´¶¶¶¶¶¶¶¶¶¶¶…….")
+
 
 def show_credits():
-    pass
+    print("░░▄░░░▄░▄▄▄▄░░░░░░░░░░░░░░░")
+    print("░░█▀▄▀█░█▄▄░░░░░░░░░░░░░░░░")
+    print("░░█░░░█░█▄▄▄░░░░░░░░░░░░░░░")
+    print("░░░░░░░░░░░░░░░░░░░░░░░░░░░")
+    print("░▄▄▄░▄░░░▄░░▄▄▄░▄▄▄▄▄░░▄▄▄░")
+    print("█░░░░█░░░█░█░░░░░░█░░░█░░░█")
+    print("█░▀█░█░░░█░░▀▀▄░░░█░░░█▀▀▀█")
+    print("░▀▀▀░░▀▀▀░░▄▄▄▀░░░▀░░░▀░░░▀")
     
 def get_guess(current_low, current_high):
-    """
-    Return a truncated average of current low and high.
-    """
-    pass
+    guess = (current_high + current_low) // 2
+    
+    return guess
+
+def set_var():
+    low = input("Set the low number.")
+    print()
+    high = input("set the high number.")
+    print()
+    if low > high or high == int or low == int:
+        print("Make the low less then high and that you typed numbers")
+        set_var()
+
+    return low, high
+
 
 def pick_number():
-    guess = input("Ey fam, Pick a number between 1 and 100 and i'm gunna guess it.")
-    if guess > 100:
-        print("Between " + low + " and " + high + " you dum dum")
+    print("Ey fam, Pick a number between " + str(low) + " and " + str(high) + " and i'm gunna guess it.")
+    print()
+    guess = input("Press Enter to continue...")
+    if int(guess) >= high + 1:
+        print("Between " + str(low) + " and " + str(high) + " you dum dum")
         pick_number()
-    elif guess < 1:
-        print("Between " + low + " and " + high + " you dum dum")
+    elif int(guess) <= low - 1:
+        print("Between " + str(low) + " and " + str(high) + " you dum dum")
         pick_number()
     else:
         return guess
 
 def check_guess(guess):
-    """
-    Computer will ask if guess was too high, low, or correct.
+    print("Was your guess " + str(guess) + ".")
+    playinpu = input("Was my assesment to high or low or was I right (Low/High/Correct)")
+    playinpu = playinpu.lower()
+    if playinpu == "l" or playinpu == "low":
+        check =  -1
+        return check
+    elif playinpu == "h" or playinpu == "high":
+        check = 1
+        return check
+    elif playinpu == "correct" or playinpu == "right":
+        check = 0
+        return check
+    else:
+        print("Type High Or Low")
+        
 
-    Returns -1 if the guess was too low
-             0 if the guess was correct
-             1 if the guess was too high
-    """
-
-def show_result():
-    """
-    Says the result of the game. (The computer might always win.)
-    """
-    pass
+def show_result(guess):
+    print("I know good and well your number was " + str(guess) + ".")
+    print()
 
 def play_again():
     while True:
@@ -57,12 +99,15 @@ def play_again():
             return False
         else:
             print("I don't understand. Please enter 'y' or 'n'.")
+            
 
 def play():
+    low, high = set_var()
+    
     current_low = low
     current_high = high
     check = -1
-    
+
     pick_number()
     
     while check != 0:
@@ -70,13 +115,13 @@ def play():
         check = check_guess(guess)
 
         if check == -1:
-            # adjust current_low
-            pass
+            current_low = guess
         elif check == 1:
-            # adjust current_high
+            current_high = guess
+        elif check == 0:
             pass
 
-    show_result(guess, rand)
+    show_result(guess)
 
 
 # Game starts running here
@@ -89,5 +134,3 @@ while playing:
     playing = play_again()
 
 show_credits()
-
-
