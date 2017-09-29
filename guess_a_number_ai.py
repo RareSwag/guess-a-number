@@ -5,7 +5,11 @@ Guess A Number AI
 9-28-17
 """
 import random
+import math
 
+#config
+low = 1
+high = 100
 
 # helper functions
 def show_start_screen():
@@ -37,23 +41,11 @@ def show_credits():
     print("█░░░░█░░░█░█░░░░░░█░░░█░░░█")
     print("█░▀█░█░░░█░░▀▀▄░░░█░░░█▀▀▀█")
     print("░▀▀▀░░▀▀▀░░▄▄▄▀░░░▀░░░▀░░░▀")
-    
+
 def get_guess(current_low, current_high):
     guess = (current_high + current_low) // 2
     
     return guess
-
-def set_var():
-    low = input("Set the low number.")
-    print()
-    high = input("set the high number.")
-    print()
-    if low > high or high == int or low == int:
-        print("Make the low less then high and that you typed numbers")
-        set_var()
-
-    return low, high
-
 
 def pick_number():
     print("Ey fam, Pick a number between " + str(low) + " and " + str(high) + " and i'm gunna guess it.")
@@ -68,31 +60,33 @@ def pick_number():
     else:
         return guess
 
-def check_guess(guess):
+def check_guess(guess, aiguess, limit):
     print("Was your guess " + str(guess) + ".")
-    playinpu = input("Was my assesment to high or low or was I right (Low/High/Correct)")
+    print()
+    playinpu = input("Guess " + str(aiguess) + " out of " + str(limit) + ", was my guess to high or low or was I right (Low/High/Correct)")
     playinpu = playinpu.lower()
+    print()
     if playinpu == "l" or playinpu == "low":
         check =  -1
-        return check
+        return check, aiguess
     elif playinpu == "h" or playinpu == "high":
         check = 1
-        return check
-    elif playinpu == "correct" or playinpu == "right":
+        return check, aiguess
+    elif playinpu == "correct" or playinpu == "right" or playinpu == "yes":
         check = 0
-        return check
+        return check, aiguess
     else:
         print("Type High Or Low")
         
 
-def show_result(guess):
+def show_result(guess, aiguess):
     print("I know good and well your number was " + str(guess) + ".")
+    print()
     print()
 
 def play_again():
     while True:
         decision = input("Would you like to play again? (y/n) ")
-
         if decision == 'y' or decision == 'yes':
             return True
         elif decision == 'n' or decision == 'no':
@@ -102,8 +96,8 @@ def play_again():
             
 
 def play():
-    low, high = set_var()
-    
+    limit = math.ceil(math.log(high - low + 1 , 2))
+    aiguess = 1
     current_low = low
     current_high = high
     check = -1
@@ -112,8 +106,9 @@ def play():
     
     while check != 0:
         guess = get_guess(current_low, current_high)
-        check = check_guess(guess)
-
+        check, ainumber = check_guess(guess, aiguess , limit)
+        ainumber = ainumber + 1
+        
         if check == -1:
             current_low = guess
         elif check == 1:
@@ -121,7 +116,7 @@ def play():
         elif check == 0:
             pass
 
-    show_result(guess)
+    show_result(guess, aiguess, limit)
 
 
 # Game starts running here
