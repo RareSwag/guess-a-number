@@ -7,10 +7,6 @@ Guess A Number AI
 import random
 import math
 
-#config
-low = 1
-high = 100
-
 # helper functions
 def show_start_screen():
     print("´´´´´´´´´´´´´´´´´´´´´´¶¶¶¶¶¶¶¶¶……..")
@@ -44,10 +40,21 @@ def show_credits():
 
 def get_guess(current_low, current_high):
     guess = (current_high + current_low) // 2
-    
     return guess
 
-def pick_number():
+def get_low():
+    low = input("What would you like the low number to be?")
+    return int(low)
+
+def get_high(low):
+    high = input("What would you like the high number to be?")
+    if low >= int(high):
+        print("high needs to be bigger then low dummy")
+        get_low()
+    
+    return int(high)
+
+def pick_number(low, high):
     guess = input("Ey fam, Pick a number between " + str(low) + " and " + str(high) + " and i'm gunna guess it.")
     print()
     if int(guess) >= high + 1:
@@ -60,8 +67,8 @@ def pick_number():
         return guess
 
 def check_guess(guess, aiguess, limit):
-    print("Was your guess " + str(guess) + ".")
     print()
+    print("Was your guess " + str(guess) + ".")
     playinpu = input("Guess " + str(aiguess) + " out of " + str(limit) + ", was my guess to high or low or was I right (Low/High/Correct)")
     playinpu = playinpu.lower()
     print()
@@ -99,22 +106,23 @@ def play_again():
             
 
 def play():
+    input("Press Enter to continue...")
+    low = get_low()
+    high = get_high(low)
     current_low = low
     current_high = high
     check = -1
     aiguess = 1
-    limit = math.ceil(math.log(high - low + 1 , 2)) + 1
+    limit = math.ceil(math.log(high - low + 1 , 2))
 
-    input("Press Enter to continue...")
-
-    pick_number()
+    pick_number(low, high)
     
     while check != 0:
         guess = get_guess(current_low, current_high)
         check = check_guess(guess, aiguess , limit)
         aiguess = aiguess + 1
 
-        if aiguess != limit:
+        if aiguess - 1 != limit:
             if check == -1:
                 current_low = guess
             elif check == 1:
