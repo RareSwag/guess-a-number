@@ -38,24 +38,29 @@ def show_credits():
     print("█░▀█░█░░░█░░▀▀▄░░░█░░░█▀▀▀█")
     print("░▀▀▀░░▀▀▀░░▄▄▄▀░░░▀░░░▀░░░▀")
 
+
+def get_name():
+    name = input("What's your name fam")
+    return name
+
 def get_guess(current_low, current_high):
     guess = (current_high + current_low) // 2
     return guess
 
-def get_low():
-    low = input("What would you like the low number to be?")
+def get_low(name):
+    low = input("What would you like the low number to be " + name + "?")
     return int(low)
 
-def get_high(low):
-    high = input("What would you like the high number to be?")
+def get_high(low, name):
+    high = input("What would you like the high number to be " + name + "?")
     if low >= int(high):
-        print("high needs to be bigger then low dummy")
+        print("High needs to be bigger then low  " + name + ".")
         get_low()
     
     return int(high)
 
-def pick_number(low, high):
-    guess = input("Ey fam, Pick a number between " + str(low) + " and " + str(high) + " and i'm gunna guess it.")
+def pick_number(low, high, name):
+    guess = input("Ey fam, Pick a number between " + str(low) + " and " + str(high) + ", " + name + ", and i'm gunna guess it.")
     print()
     if int(guess) >= high + 1:
         print("Between " + str(low) + " and " + str(high) + " you dum dum")
@@ -66,10 +71,10 @@ def pick_number(low, high):
     else:
         return guess
 
-def check_guess(guess, aiguess, limit):
+def check_guess(guess, aiguess, limit, name):
     print()
-    print("Was your guess " + str(guess) + ".")
-    playinpu = input("Guess " + str(aiguess) + " out of " + str(limit) + ", was my guess to high or low or was I right (Low/High/Correct)")
+    print("Was your guess " + str(guess) + " " + name + ".")
+    playinpu = input("Guess " + str(aiguess) + " out of " + str(limit) + ", was my guess to high or low or was I right " + name + ". (Low/High/Correct)")
     playinpu = playinpu.lower()
     print()
     if playinpu == "l" or playinpu == "low":
@@ -82,15 +87,15 @@ def check_guess(guess, aiguess, limit):
         check = 0
         return check
     else:
-        print("Type High Or Low")
+        print("Type High Or Low " + name + ".")
         
 
-def show_result(guess, aiguess, limit):
-    if aiguess != limit:
-        print("I know good and well your number was " + str(guess) + ".")
-        print("I got it in " + aiguess + " guesses.")
+def show_result(guess, aiguess, limit, name):
+    if aiguess != limit + 1:
+        print("I know good and well your number was " + str(guess) + " " + name + ".")
+        print("I got it in " + str(aiguess) + " guesses.")
     else:
-        print("I suck and should be terminated")
+        print("I suck and should be terminated. Ur to clean " + name + ".")
     print()
     print()
 
@@ -107,22 +112,23 @@ def play_again():
 
 def play():
     input("Press Enter to continue...")
-    low = get_low()
-    high = get_high(low)
+    name = get_name()
+    low = get_low(name)
+    high = get_high(low, name)
     current_low = low
     current_high = high
     check = -1
     aiguess = 1
     limit = math.ceil(math.log(high - low + 1 , 2))
 
-    pick_number(low, high)
+    pick_number(low, high, name)
     
     while check != 0:
         guess = get_guess(current_low, current_high)
-        check = check_guess(guess, aiguess , limit)
+        check = check_guess(guess, aiguess , limit, name)
         aiguess = aiguess + 1
 
-        if aiguess - 1 != limit:
+        if aiguess != limit + 1:
             if check == -1:
                 current_low = guess
             elif check == 1:
@@ -133,7 +139,7 @@ def play():
             print("I ran out of guesses...rip")
             check = 0
 
-    show_result(guess, aiguess, limit)
+    show_result(guess, aiguess, limit, name)
 
 
 # Game starts running here
